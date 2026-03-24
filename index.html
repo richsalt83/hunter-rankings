@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hunter Salt — Nationals Qualification Tracker</title>
+<style>
+  :root {
+    --brit-blue: #003078;
+    --brit-light: #e8edf3;
+    --eng-red: #c8102e;
+    --eng-light: #fce8eb;
+    --hunter-gold: #f59e0b;
+    --hunter-bg: #fffbeb;
+    --outside-grey: #6b7280;
+    --outside-light: #f3f4f6;
+    --green: #059669;
+    --red: #dc2626;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .header { text-align: center; margin-bottom: 24px; }
+
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+  }
+
+  .header .subtitle { color: var(--muted); font-size: 15px; }
+
+  .meta-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    font-size: 14px;
+  }
+
+  .meta-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .meta-item .label { color: var(--muted); }
+  .meta-item .value { font-weight: 600; }
+
+  .data-source-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  .countdown {
+    background: linear-gradient(135deg, var(--brit-blue) 0%, #1a4a8a 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 18px 24px;
+    text-align: center;
+    margin: 16px 0 28px;
+  }
+
+  .countdown .days {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .countdown .days-label {
+    font-size: 13px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .event-section { margin-bottom: 40px; }
+
+  .event-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .status-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .status-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .status-card .card-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .status-card .card-value { font-size: 24px; font-weight: 700; }
+  .status-card .card-detail { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  .qualifying-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .badge-british { background: var(--brit-light); color: var(--brit-blue); }
+  .badge-english { background: var(--eng-light); color: var(--eng-red); }
+  .badge-outside { background: var(--outside-light); color: var(--outside-grey); }
+
+  .ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .ranking-table thead th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .ranking-table tbody td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ranking-table tbody tr:last-child td { border-bottom: none; }
+  .ranking-table tbody tr:hover { background: #f8fafc; }
+
+  .row-hunter {
+    background: var(--hunter-bg) !important;
+    font-weight: 600;
+  }
+
+  .row-hunter:hover { background: #fef9e7 !important; }
+
+  .row-hunter td:first-child {
+    border-left: 4px solid var(--hunter-gold);
+    padding-left: 10px;
+  }
+
+  .cutoff-row td {
+    padding: 0 !important;
+    height: 3px;
+    position: relative;
+    border-bottom: none !important;
+  }
+
+  .cutoff-british td { background: var(--brit-blue); }
+  .cutoff-english td { background: var(--eng-red); }
+
+  .cutoff-label {
+    position: absolute;
+    right: 14px;
+    top: -10px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .cutoff-british .cutoff-label { background: var(--brit-blue); color: white; }
+  .cutoff-english .cutoff-label { background: var(--eng-red); color: white; }
+
+  .level-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+
+  .level-british { background: var(--brit-blue); }
+  .level-english { background: var(--eng-red); }
+  .level-outside { background: var(--outside-grey); }
+
+  .gap-positive { color: var(--green); font-weight: 600; }
+  .gap-negative { color: var(--red); font-weight: 600; }
+
+  .no-time-notice {
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #92400e;
+  }
+
+  .info-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-top: 32px;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .info-panel h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .info-panel p { color: var(--muted); font-size: 13px; margin-bottom: 4px; }
+
+  .source-link {
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .source-link a { color: var(--brit-blue); text-decoration: none; }
+  .source-link a:hover { text-decoration: underline; }
+
+
+  @media (max-width: 640px) {
+    body { padding: 14px; }
+    .info-panel { grid-template-columns: 1fr; }
+    .meta-row { flex-direction: column; align-items: center; }
+    .status-cards { grid-template-columns: 1fr 1fr; }
+    .header h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Hunter Salt</h1>
+  <div class="subtitle">Atlantis Swimming Club · Member #1458335 · YOB 2012</div>
+  <div class="meta-row">
+    <div class="meta-item">
+      <span class="label">Qualifying window:</span>
+      <span class="value">6 Mar – 10 May 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="label">Rankings updated:</span>
+      <span class="value" id="last-updated">—</span>
+    </div>
+    <div class="meta-item">
+      <span class="label">Next update:</span>
+      <span class="value" id="next-update">—</span>
+    </div>
+  </div>
+  <div class="data-source-note" id="data-source-note"></div>
+</div>
+
+<div class="countdown" id="countdown">
+  <div class="days" id="countdown-days">—</div>
+  <div class="days-label">days remaining in qualifying window</div>
+</div>
+
+<div id="content"></div>
+
+<div class="info-panel">
+  <div>
+    <h3>🇬🇧 Aquatics GB Next Gen Championships</h3>
+    <p>16–22 July 2026 · Ponds Forge, Sheffield</p>
+    <p>Top 20 ranked swimmers per event (13/14 age group)</p>
+    <p>50m pool times only, nationally licensed meets</p>
+  </div>
+  <div>
+    <h3>🏴󠁧󠁢󠁥󠁮󠁧󠁿 Swim England National Summer Meet</h3>
+    <p>27 Jul – 1 Aug 2026 · Ponds Forge, Sheffield</p>
+    <p>Next 20 fastest Swim England swimmers (14 years)</p>
+    <p>Cannot swim same event at both championships</p>
+  </div>
+</div>
+
+<div class="source-link">
+  Data source: <a href="https://www.swimmingresults.org/events/summer26/interim.html" target="_blank">swimmingresults.org interim rankings</a>
+   · Updates published every Tuesday &amp; Friday
+</div>
+
+<script>
+// ─── CONFIG ───
+const HUNTER_MEMBER = '1458335';
+const QUALIFYING_END = new Date('2026-05-10T23:59:59');
+
+// ─── EMBEDDED SNAPSHOT DATA (24 March 2026) ───
+// Format: [club, name, memberNo, time]
+const SNAPSHOT = {
+  timestamp: '00:15 on 24-03-2026',
+  brit100: [
+    ["Repton","Joe Heather","1512200","1:02.20"],
+    ["Plymouth Col","Tomas Stanimirov","1829851","1:02.59"],
+    ["Guildford Ct","Rory McDonald","1331985","1:04.74"],
+    ["Mt Kelly","Jacob Thistlewood","1496787","1:04.99"],
+    ["Caradon","William Higgs","1525937","1:05.28"],
+    ["Co Norwich","Tobias Anderson","1528162","1:05.44"],
+    ["Co Birm'ham","Jason Li","1367904","1:05.66"],
+    ["Co Leicester","Mason Traynor","1606720","1:06.10"],
+    ["Armthorpe","James Ellis","1357937","1:06.16"],
+    ["Warrender Ba","Andrew Fernando","90033050","1:06.42"],
+    ["Northgate","Rory Yarnley","1659910","1:06.47"],
+    ["Rotherham Mo","Edward Rose","1518781","1:06.48"],
+    ["Wigan BEST","Will Nicholls","1386396","1:06.84"],
+    ["Atlantis","Hunter Salt","1458335","1:06.92"],
+    ["Bristol Hen","Jacob Pearson","1481333","1:06.95"],
+    ["Basingstoke","Daniel Circuit","1610054","1:06.97"],
+    ["Portsmouth N","Cohen Daly","1483492","1:06.99"],
+    ["Cleethorpes","Xiaotian Zhang","1619491","1:07.03"],
+    ["Sutton Cheam","Harris Kane","1601507","1:07.31"],
+    ["Berkhamsted","Rafe Maybury","1494618","1:07.32"]
+  ],
+  eng100: [
+    ["Co Coventry","Bosco Wong","1576959","1:07.34"],
+    ["KingstonHull","Oscar Focht","1474197","1:07.60"],
+    ["Basildon Ph","Jake Atkinson","1610494","1:07.63"],
+    ["Haslemere","Henry Harkman","1578091","1:07.65"],
+    ["Co Leeds","Leo Li","1613065","1:07.68"],
+    ["Sutton Cheam","Henry Farr","1576650","1:07.76"],
+    ["Cosacss","Joe Fairlamb","1496192","1:08.12"],
+    ["Wandsworth","Samuel Liau","1712499","1:08.13"],
+    ["Co Lincoln P","Oliver Wilkinson","1457530","1:08.21"],
+    ["Repton","Stephen Iankov","1404436","1:08.25"],
+    ["Stockport Mo","Luca White","1577634","1:08.34"],
+    ["Millfield","Owen Briscoe","1737997","1:08.63"],
+    ["Newbury","Thomas Morton","1654041","1:08.78"],
+    ["Ealing","Kacper Nowosielski","1607042","1:08.91"],
+    ["Stockport Mo","Oliver Tang","1599648","1:09.45"],
+    ["Okehampton","Seth Steemson","1304414","1:09.48"],
+    ["Evesham","Jasper Siupa","1630651","1:09.52"],
+    ["Ramsbottom","Harrison Burgess","1479972","1:09.69"],
+    ["Willesden","Ayden Roumilhac","1495659","1:09.72"],
+    ["Darlington","Alfie Wilson","1589414","1:09.79"]
+  ],
+  brit200: [
+    ["Repton","Joe Heather","1512200","2:18.27"],
+    ["Plymouth Col","Tomas Stanimirov","1829851","2:18.50"],
+    ["Co Norwich","Tobias Anderson","1528162","2:20.76"],
+    ["Rotherham Mo","Edward Rose","1518781","2:20.88"],
+    ["Armthorpe","James Ellis","1357937","2:21.23"],
+    ["Mt Kelly","Jacob Thistlewood","1496787","2:21.59"],
+    ["Bexley","Gabriel Pereira Gil","1425226","2:22.18"],
+    ["Guildford Ct","Rory McDonald","1331985","2:23.06"],
+    ["Sevenoaks","Dane Rawkins","1598311","2:23.65"],
+    ["Basildon Ph","Jake Atkinson","1610494","2:24.64"],
+    ["Maidstone SC","Romeo Ball","1500990","2:24.70"],
+    ["Leiston","Jesse Knight","1614959","2:24.77"],
+    ["Co Birm'ham","Jason Li","1367904","2:24.97"],
+    ["Co Coventry","Bosco Wong","1576959","2:25.57"],
+    ["Co Leicester","Mason Traynor","1606720","2:25.77"],
+    ["Co Peterboro","Ashton Hunter","1595559","2:26.06"],
+    ["Warrington W","Leo Craven","1474547","2:26.22"],
+    ["Cleethorpes","Xiaotian Zhang","1619491","2:26.36"],
+    ["Co Leeds","Leo Li","1613065","2:26.80"],
+    ["Wigan BEST","Will Nicholls","1386396","2:26.94"]
+  ],
+  eng200: [
+    ["Willesden","Ayden Roumilhac","1495659","2:27.19"],
+    ["Portsmouth N","Cohen Daly","1483492","2:27.36"],
+    ["Newquay","Samson Hague","1612316","2:27.47"],
+    ["Okehampton","Seth Steemson","1304414","2:27.63"],
+    ["Berkhamsted","Rafe Lawson","1624280","2:27.72"],
+    ["South Lincs","Francesco Monaco","1423652","2:27.75"],
+    ["Stockport Mo","Luca White","1577634","2:28.03"],
+    ["Newbury","Thomas Morton","1654041","2:28.10"],
+    ["Millfield","Daniel Staskus","1600419","2:28.10"],
+    ["Plymouth Lea","Lucas Doick","1726348","2:28.23"],
+    ["Sutton Cheam","Harris Kane","1601507","2:28.24"],
+    ["Ealing","Kacper Nowosielski","1607042","2:28.48"],
+    ["Ramsbottom","Harrison Burgess","1479972","2:28.52"],
+    ["Wandsworth","Samuel Liau","1712499","2:29.03"],
+    ["Scarborough","Wiktor Gora","1649733","2:29.10"],
+    ["Nova Cent'n","Harry Callaghan-Wetton","1579741","2:29.57"],
+    ["Wycombe Dist","Roan Kearney","1655355","2:29.66"],
+    ["Evesham","Jasper Siupa","1630651","2:30.05"],
+    ["Haslemere","Henry Harkman","1578091","2:30.37"],
+    ["TigersJersey","Noah Preston","1455851","2:30.61"]
+  ]
+};
+
+// ─── UTILITIES ───
+function timeToSeconds(t) {
+  if (!t || t === '0') return Infinity;
+  const parts = t.split(':');
+  if (parts.length === 2) return parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
+  return parseFloat(parts[0]) || Infinity;
+}
+
+function formatGap(gapSec) {
+  const abs = Math.abs(gapSec).toFixed(2);
+  if (gapSec < 0) return `<span class="gap-positive">${abs}s inside</span>`;
+  if (gapSec > 0) return `<span class="gap-negative">${abs}s outside</span>`;
+  return `<span>on the line</span>`;
+}
+
+function arrToSwimmer(arr) {
+  return {
+    club: arr[0], name: arr[1], member: arr[2], time: arr[3],
+    timeSeconds: timeToSeconds(arr[3]),
+    isHunter: arr[2] === HUNTER_MEMBER
+  };
+}
+
+// ─── COUNTDOWN ───
+function updateCountdown() {
+  const now = new Date();
+  const diff = QUALIFYING_END - now;
+  const days = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+  document.getElementById('countdown-days').textContent = days;
+  if (days === 0) {
+    document.getElementById('countdown').style.background = 'linear-gradient(135deg, #6b7280, #9ca3af)';
+    document.querySelector('.days-label').textContent = 'Qualifying window has closed';
+  }
+}
+updateCountdown();
+
+// ─── NEXT UPDATE ───
+function getNextUpdate() {
+  const now = new Date();
+  const day = now.getDay();
+  let daysUntil;
+  if (day < 2) daysUntil = 2 - day;
+  else if (day < 5) daysUntil = 5 - day;
+  else daysUntil = (2 + 7) - day;
+  const next = new Date(now);
+  next.setDate(now.getDate() + daysUntil);
+  return next.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' });
+}
+document.getElementById('next-update').textContent = getNextUpdate();
+
+// ─── BUILD COMBINED TABLE ───
+function buildCombined(british, english) {
+  const britSorted = [...british].sort((a, b) => a.timeSeconds - b.timeSeconds);
+  const engSorted = [...english].sort((a, b) => a.timeSeconds - b.timeSeconds);
+  const combined = [];
+  let rank = 1;
+  britSorted.forEach(s => combined.push({ ...s, rank: rank++, level: 'british' }));
+  const britCutoff = combined.length;
+  engSorted.forEach(s => combined.push({ ...s, rank: rank++, level: 'english' }));
+  const engCutoff = combined.length;
+  return { combined, britCutoff, engCutoff };
+}
+
+// ─── RENDER ───
+function renderEvent(eventName, british, english) {
+  const { combined, britCutoff, engCutoff } = buildCombined(british, english);
+  const hunter = combined.find(s => s.isHunter);
+
+  let html = `<div class="event-section"><div class="event-title">${eventName}</div>`;
+
+  if (!hunter) {
+    const bLast = combined[britCutoff - 1];
+    const eLast = combined[engCutoff - 1];
+    html += `<div class="no-time-notice">
+      <strong>No ranked time yet.</strong> Hunter needs to post a qualifying swim in ${eventName} at a 50m pool, nationally licensed meet before 10 May to appear in these rankings.<br>
+      Current cutoff times — <strong>British #${britCutoff}: ${bLast?.time || '—'}</strong> · <strong>English #${engCutoff}: ${eLast?.time || '—'}</strong>
+    </div>`;
+  } else {
+    const britLast = britCutoff > 0 ? combined[britCutoff - 1] : null;
+    const engLast = engCutoff > 0 ? combined[engCutoff - 1] : null;
+    const above = hunter.rank > 1 ? combined[hunter.rank - 2] : null;
+    const below = hunter.rank < combined.length ? combined[hunter.rank] : null;
+
+    let badge, badgeText;
+    if (hunter.rank <= britCutoff) { badge = 'badge-british'; badgeText = '🇬🇧 British Next Gen'; }
+    else if (hunter.rank <= engCutoff) { badge = 'badge-english'; badgeText = '🏴󠁧󠁢󠁥󠁮󠁧󠁿 English Summer Meet'; }
+    else { badge = 'badge-outside'; badgeText = 'Outside qualification'; }
+
+    let gapHtml = '';
+    if (hunter.rank <= britCutoff && britLast) {
+      gapHtml = formatGap(hunter.timeSeconds - britLast.timeSeconds) + ' British cutoff';
+    } else if (engLast) {
+      gapHtml = formatGap(hunter.timeSeconds - engLast.timeSeconds) + ' English cutoff';
+    }
+
+    html += `<div class="status-cards">
+      <div class="status-card">
+        <div class="card-label">Current Rank</div>
+        <div class="card-value">#${hunter.rank} <span style="font-size:14px;font-weight:400">of ${combined.length}</span></div>
+        <div class="card-detail"><span class="qualifying-badge ${badge}">${badgeText}</span></div>
+      </div>
+      <div class="status-card">
+        <div class="card-label">Best Time</div>
+        <div class="card-value">${hunter.time}</div>
+        <div class="card-detail">${gapHtml}</div>
+      </div>
+      <div class="status-card">
+        <div class="card-label">Gap to Rank Above</div>
+        <div class="card-value">${above ? (hunter.timeSeconds - above.timeSeconds).toFixed(2) + 's' : '—'}</div>
+        <div class="card-detail">${above ? '#' + above.rank + ' ' + above.name + ' (' + above.time + ')' : 'Already #1'}</div>
+      </div>
+      <div class="status-card">
+        <div class="card-label">Gap from Rank Below</div>
+        <div class="card-value">${below ? (below.timeSeconds - hunter.timeSeconds).toFixed(2) + 's' : '—'}</div>
+        <div class="card-detail">${below ? '#' + below.rank + ' ' + below.name + ' (' + below.time + ')' : 'Last ranked'}</div>
+      </div>
+    </div>`;
+  }
+
+  // Table
+  html += `<table class="ranking-table"><thead><tr>
+    <th style="width:50px">Rank</th><th>Name</th><th>Club</th>
+    <th style="width:90px">Time</th><th style="width:140px">Championship</th>
+  </tr></thead><tbody>`;
+
+  combined.forEach(s => {
+    const cls = s.isHunter ? 'row-hunter' : '';
+    const dot = s.level === 'british' ? 'level-british' : 'level-english';
+    const lbl = s.level === 'british' ? 'British' : 'English';
+    const name = s.isHunter ? `<strong>${s.name}</strong>` : s.name;
+
+    html += `<tr class="${cls}"><td>${s.rank}</td><td>${name}</td><td>${s.club}</td><td>${s.time}</td><td><span class="level-indicator ${dot}"></span>${lbl}</td></tr>`;
+
+    if (s.rank === britCutoff && britCutoff < combined.length) {
+      html += `<tr class="cutoff-row cutoff-british"><td colspan="5"><span class="cutoff-label">▲ British cutoff (Top ${britCutoff})</span></td></tr>`;
+    }
+    if (s.rank === engCutoff && engCutoff < combined.length) {
+      html += `<tr class="cutoff-row cutoff-english"><td colspan="5"><span class="cutoff-label">▲ English cutoff (Top ${engCutoff})</span></td></tr>`;
+    }
+  });
+
+  html += `</tbody></table></div>`;
+  return html;
+}
+
+function renderAll(data) {
+  const brit100 = data.brit100.map(arrToSwimmer);
+  const eng100 = data.eng100.map(arrToSwimmer);
+  const brit200 = data.brit200.map(arrToSwimmer);
+  const eng200 = data.eng200.map(arrToSwimmer);
+
+  document.getElementById('last-updated').textContent = data.timestamp;
+  document.getElementById('data-source-note').textContent =
+    'Data auto-updated every Tuesday & Friday via swimmingresults.org';
+
+  let html = '';
+  html += renderEvent('100m Backstroke', brit100, eng100);
+  html += renderEvent('200m Backstroke', brit200, eng200);
+  document.getElementById('content').innerHTML = html;
+}
+
+// ─── INIT ───
+renderAll(SNAPSHOT);
+</script>
+
+</body>
+</html>
