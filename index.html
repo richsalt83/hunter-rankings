@@ -329,7 +329,7 @@ const QUALIFYING_END = new Date('2026-05-10T23:59:59');
 // ─── EMBEDDED SNAPSHOT DATA (24 March 2026) ───
 // Format: [club, name, memberNo, time]
 const SNAPSHOT = {
-  timestamp: '00:10 on 27-03-2026',
+  timestamp: '00:11 on 31-03-2026',
   brit100: [
     ["Repton","Joe Heather","1512200","1:02.20"],
     ["Plymouth Col","Tomas Stanimirov","1829851","1:02.59"],
@@ -337,7 +337,9 @@ const SNAPSHOT = {
     ["Mt Kelly","Jacob Thistlewood","1496787","1:04.99"],
     ["Caradon","William Higgs","1525937","1:05.28"],
     ["Co Norwich","Tobias Anderson","1528162","1:05.44"],
+    ["Sutton Cheam","Henry Farr","1576650","1:05.57"],
     ["Co Birm'ham","Jason Li","1367904","1:05.66"],
+    ["Sutton Cheam","Harris Kane","1601507","1:06.10"],
     ["Co Leicester","Mason Traynor","1606720","1:06.10"],
     ["Armthorpe","James Ellis","1357937","1:06.16"],
     ["Warrender Ba","Andrew Fernando","90033050","1:06.42"],
@@ -348,31 +350,29 @@ const SNAPSHOT = {
     ["Bristol Hen","Jacob Pearson","1481333","1:06.95"],
     ["Basingstoke","Daniel Circuit","1610054","1:06.97"],
     ["Portsmouth N","Cohen Daly","1483492","1:06.99"],
-    ["Cleethorpes","Xiaotian Zhang","1619491","1:07.03"],
-    ["Sutton Cheam","Harris Kane","1601507","1:07.31"],
-    ["Berkhamsted","Rafe Lawson","1624280","1:07.32"]
+    ["Cleethorpes","Xiaotian Zhang","1619491","1:07.03"]
   ],
   eng100: [
+    ["Elmbridge","Nathan Austen","1610760","1:07.18"],
+    ["Carlisle Aq","Reuben Dorey","1500621","1:07.21"],
+    ["Co St Albans","Charles Hodgson","1605757","1:07.27"],
+    ["Berkhamsted","Rafe Lawson","1624280","1:07.28"],
     ["Co Coventry","Bosco Wong","1576959","1:07.34"],
     ["KingstonHull","Oscar Focht","1474197","1:07.60"],
     ["Basildon Ph","Jake Atkinson","1610494","1:07.63"],
     ["Haslemere","Henry Harkman","1578091","1:07.65"],
     ["Co Leeds","Leo Li","1613065","1:07.68"],
-    ["Sutton Cheam","Henry Farr","1576650","1:07.76"],
+    ["Beckenham","Thomas De Cruz","1409651","1:07.75"],
     ["Tadcaster","Bradley Forrest","1476949","1:08.06"],
     ["Cosacss","Joe Fairlamb","1496192","1:08.12"],
     ["Wandsworth","Samuel Liau","1712499","1:08.13"],
+    ["Stretford","Jack Kennedy","1593502","1:08.20"],
     ["Co Lincoln P","Oliver Wilkinson","1457530","1:08.21"],
     ["Repton","Stephen Iankov","1404436","1:08.25"],
+    ["Trafford Met","Etan Lo","1670276","1:08.34"],
     ["Stockport Mo","Luca White","1577634","1:08.34"],
-    ["Warrington W","Leo Craven","1474547","1:08.57"],
-    ["Millfield","Owen Briscoe","1737997","1:08.63"],
-    ["Newbury","Thomas Morton","1654041","1:08.78"],
-    ["Ealing","Kacper Nowosielski","1607042","1:08.91"],
-    ["Stockport Mo","Oliver Tang","1599648","1:09.45"],
-    ["Co Manch Aq","Tyler Barber","1662396","1:09.46"],
-    ["Okehampton","Seth Steemson","1304414","1:09.48"],
-    ["Evesham","Jasper Siupa","1630651","1:09.52"]
+    ["Preston","Sebastian Boughen","1448243","1:08.47"],
+    ["Warrington W","Leo Craven","1474547","1:08.57"]
   ],
   brit200: [
     ["Repton","Joe Heather","1512200","2:18.27"],
@@ -382,44 +382,43 @@ const SNAPSHOT = {
     ["Armthorpe","James Ellis","1357937","2:21.23"],
     ["Mt Kelly","Jacob Thistlewood","1496787","2:21.59"],
     ["Bexley","Gabriel Pereira Gil","1425226","2:22.18"],
+    ["Wigan BEST","Will Nicholls","1386396","2:22.88"],
     ["Guildford Ct","Rory McDonald","1331985","2:23.06"],
     ["Sevenoaks","Dane Rawkins","1598311","2:23.65"],
+    ["Stretford","Jack Kennedy","1593502","2:23.73"],
+    ["Sutton Cheam","Henry Farr","1576650","2:23.91"],
     ["Basildon Ph","Jake Atkinson","1610494","2:24.64"],
     ["Maidstone SC","Romeo Ball","1500990","2:24.70"],
     ["Leiston","Jesse Knight","1614959","2:24.77"],
+    ["Berkhamsted","Rafe Lawson","1624280","2:24.89"],
     ["Co Birm'ham","Jason Li","1367904","2:24.97"],
     ["Northgate","Rory Yarnley","1659910","2:25.52"],
     ["Co Coventry","Bosco Wong","1576959","2:25.57"],
-    ["Co Leicester","Mason Traynor","1606720","2:25.77"],
-    ["Co Peterboro","Ashton Hunter","1595559","2:26.06"],
-    ["Atlantis","Ethan Brown","1631643","2:26.14"],
-    ["Warrington W","Leo Craven","1474547","2:26.22"],
-    ["Cleethorpes","Xiaotian Zhang","1619491","2:26.36"]
+    ["Beckenham","Thomas De Cruz","1409651","2:25.58"]
   ],
   eng200: [
+    ["Co St Albans","Charles Hodgson","1605757","2:26.05"],
+    ["Co Peterboro","Ashton Hunter","1595559","2:26.06"],
+    ["Warrington W","Leo Craven","1474547","2:26.22"],
+    ["Sutton Cheam","Harris Kane","1601507","2:26.26"],
+    ["Cleethorpes","Xiaotian Zhang","1619491","2:26.36"],
     ["Co Leeds","Leo Li","1613065","2:26.80"],
-    ["Wigan BEST","Will Nicholls","1386396","2:26.94"],
+    ["Elmbridge","Nathan Austen","1610760","2:27.12"],
     ["Willesden","Ayden Roumilhac","1495659","2:27.19"],
     ["Atlantis","Hunter Salt","1458335","2:27.27"],
     ["Portsmouth N","Cohen Daly","1483492","2:27.36"],
+    ["Nova Cent'n","Dante Palmer","1416023","2:27.40"],
     ["Newquay","Samson Hague","1612316","2:27.47"],
     ["Newbury","Thomas Morton","1654041","2:27.47"],
+    ["Carlisle Aq","Reuben Dorey","1500621","2:27.53"],
     ["Okehampton","Seth Steemson","1304414","2:27.63"],
-    ["Berkhamsted","Rafe Lawson","1624280","2:27.72"],
     ["South Lincs","Francesco Monaco","1423652","2:27.75"],
     ["Stockport Mo","Luca White","1577634","2:28.03"],
     ["Millfield","Daniel Staskus","1600419","2:28.10"],
-    ["Plymouth Lea","Lucas Doick","1726348","2:28.23"],
-    ["Sutton Cheam","Harris Kane","1601507","2:28.24"],
-    ["Ealing","Kacper Nowosielski","1607042","2:28.48"],
-    ["Ramsbottom","Harrison Burgess","1479972","2:28.52"],
-    ["Wandsworth","Samuel Liau","1712499","2:29.03"],
-    ["Scarborough","Wiktor Gora","1649733","2:29.10"],
-    ["Elmbridge","Nathan Austen","1610760","2:29.13"],
-    ["Nova Cent'n","Harry Callaghan-Wetton","1579741","2:29.57"]
+    ["Brompton","Roman Cazzol","1506847","2:28.14"],
+    ["Plymouth Lea","Lucas Doick","1726348","2:28.23"]
   ]
 };
-
 // ─── UTILITIES ───
 function timeToSeconds(t) {
   if (!t || t === '0') return Infinity;
