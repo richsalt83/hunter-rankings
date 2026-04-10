@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hunter Salt â Nationals Qualification Tracker</title>
+<title>Hunter Salt — Nationals Qualification Tracker</title>
 <style>
   :root {
     --brit-blue: #003078;
@@ -276,26 +276,26 @@
 
 <div class="header">
   <h1>Hunter Salt</h1>
-  <div class="subtitle">Atlantis Swimming Club Â· Member #1458335 Â· YOB 2012</div>
+  <div class="subtitle">Atlantis Swimming Club · Member #1458335 · YOB 2012</div>
   <div class="meta-row">
     <div class="meta-item">
       <span class="label">Qualifying window:</span>
-      <span class="value">6 Mar â 10 May 2026</span>
+      <span class="value">6 Mar – 10 May 2026</span>
     </div>
     <div class="meta-item">
       <span class="label">Rankings updated:</span>
-      <span class="value" id="last-updated">â</span>
+      <span class="value" id="last-updated">—</span>
     </div>
     <div class="meta-item">
       <span class="label">Next update:</span>
-      <span class="value" id="next-update">â</span>
+      <span class="value" id="next-update">—</span>
     </div>
   </div>
   <div class="data-source-note" id="data-source-note"></div>
 </div>
 
 <div class="countdown" id="countdown">
-  <div class="days" id="countdown-days">â</div>
+  <div class="days" id="countdown-days">—</div>
   <div class="days-label">days remaining in qualifying window</div>
 </div>
 
@@ -303,14 +303,14 @@
 
 <div class="info-panel">
   <div>
-    <h3>ð¬ð§ Aquatics GB Next Gen Championships</h3>
-    <p>16â22 July 2026 Â· Ponds Forge, Sheffield</p>
+    <h3>🇬🇧 Aquatics GB Next Gen Championships</h3>
+    <p>16–22 July 2026 · Ponds Forge, Sheffield</p>
     <p>Top 20 ranked swimmers per event (13/14 age group)</p>
     <p>50m pool times only, nationally licensed meets</p>
   </div>
   <div>
-    <h3>ð´ó §ó ¢ó ¥ó ®ó §ó ¿ Swim England National Summer Meet</h3>
-    <p>27 Jul â 1 Aug 2026 Â· Ponds Forge, Sheffield</p>
+    <h3>🏴󠁧󠁢󠁥󠁮󠁧󠁿 Swim England National Summer Meet</h3>
+    <p>27 Jul – 1 Aug 2026 · Ponds Forge, Sheffield</p>
     <p>Next 20 fastest Swim England swimmers (14 years)</p>
     <p>Cannot swim same event at both championships</p>
   </div>
@@ -318,15 +318,15 @@
 
 <div class="source-link">
   Data source: <a href="https://www.swimmingresults.org/events/summer26/interim.html" target="_blank">swimmingresults.org interim rankings</a>
-   Â· Updates published every Tuesday &amp; Friday
+   · Updates published every Tuesday &amp; Friday
 </div>
 
 <script>
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ CONFIG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// âââ CONFIG âââ
 const HUNTER_MEMBER = '1458335';
 const QUALIFYING_END = new Date('2026-05-10T23:59:59');
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ EMBEDDED SNAPSHOT DATA (24 March 2026) Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// âââ EMBEDDED SNAPSHOT DATA (24 March 2026) âââ
 // Format: [club, name, memberNo, time]
 const SNAPSHOT = {
   "timestamp": "Aquatics GB Next GEN Championships - interim report - created at 08:55 on 10-04-2026",
@@ -819,7 +819,7 @@ const SNAPSHOT = {
     ]
   ]
 };
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ UTILITIES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// âââ UTILITIES âââ
 function timeToSeconds(t) {
   if (!t || t === '0') return Infinity;
   const parts = t.split(':');
@@ -842,7 +842,7 @@ function arrToSwimmer(arr) {
   };
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ COUNTDOWN Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// âââ COUNTDOWN âââ
 function updateCountdown() {
   const now = new Date();
   const diff = QUALIFYING_END - now;
@@ -855,7 +855,7 @@ function updateCountdown() {
 }
 updateCountdown();
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ NEXT UPDATE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// âââ NEXT UPDATE âââ
 function getNextUpdate() {
   const now = new Date();
   const day = now.getDay();
@@ -869,7 +869,7 @@ function getNextUpdate() {
 }
 document.getElementById('next-update').textContent = getNextUpdate();
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ BUILD COMBINED TABLE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// âââ BUILD COMBINED TABLE âââ
 function buildCombined(british, english) {
   const britSorted = [...british].sort((a, b) => a.timeSeconds - b.timeSeconds);
   const engSorted = [...english].sort((a, b) => a.timeSeconds - b.timeSeconds);
@@ -882,7 +882,7 @@ function buildCombined(british, english) {
   return { combined, britCutoff, engCutoff };
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ RENDER Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// âââ RENDER âââ
 function renderEvent(eventName, british, english) {
   const { combined, britCutoff, engCutoff } = buildCombined(british, english);
   const hunter = combined.find(s => s.isHunter);
@@ -894,7 +894,7 @@ function renderEvent(eventName, british, english) {
     const eLast = combined[engCutoff - 1];
     html += `<div class="no-time-notice">
       <strong>No ranked time yet.</strong> Hunter needs to post a qualifying swim in ${eventName} at a 50m pool, nationally licensed meet before 10 May to appear in these rankings.<br>
-      Current cutoff times â <strong>British #${britCutoff}: ${bLast?.time || 'â'}</strong> Â· <strong>English #${engCutoff}: ${eLast?.time || 'â'}</strong>
+      Current cutoff times — <strong>British #${britCutoff}: ${bLast?.time || '—'}</strong> · <strong>English #${engCutoff}: ${eLast?.time || '—'}</strong>
     </div>`;
   } else {
     const britLast = britCutoff > 0 ? combined[britCutoff - 1] : null;
@@ -903,8 +903,8 @@ function renderEvent(eventName, british, english) {
     const below = hunter.rank < combined.length ? combined[hunter.rank] : null;
 
     let badge, badgeText;
-    if (hunter.rank <= britCutoff) { badge = 'badge-british'; badgeText = 'ð¬ð§ British Next Gen'; }
-    else if (hunter.rank <= engCutoff) { badge = 'badge-english'; badgeText = 'ð´ó §ó ¢ó ¥ó ®ó §ó ¿ English Summer Meet'; }
+    if (hunter.rank <= britCutoff) { badge = 'badge-british'; badgeText = '🇬🇧 British Next Gen'; }
+    else if (hunter.rank <= engCutoff) { badge = 'badge-english'; badgeText = '🏴󠁧󠁢󠁥󠁮󠁧󠁿 English Summer Meet'; }
     else { badge = 'badge-outside'; badgeText = 'Outside qualification'; }
 
     let gapHtml = '';
@@ -927,12 +927,12 @@ function renderEvent(eventName, british, english) {
       </div>
       <div class="status-card">
         <div class="card-label">Gap to Rank Above</div>
-        <div class="card-value">${above ? (hunter.timeSeconds - above.timeSeconds).toFixed(2) + 's' : 'â'}</div>
+        <div class="card-value">${above ? (hunter.timeSeconds - above.timeSeconds).toFixed(2) + 's' : '—'}</div>
         <div class="card-detail">${above ? '#' + above.rank + ' ' + above.name + ' (' + above.time + ')' : 'Already #1'}</div>
       </div>
       <div class="status-card">
         <div class="card-label">Gap from Rank Below</div>
-        <div class="card-value">${below ? (below.timeSeconds - hunter.timeSeconds).toFixed(2) + 's' : 'â'}</div>
+        <div class="card-value">${below ? (below.timeSeconds - hunter.timeSeconds).toFixed(2) + 's' : '—'}</div>
         <div class="card-detail">${below ? '#' + below.rank + ' ' + below.name + ' (' + below.time + ')' : 'Last ranked'}</div>
       </div>
     </div>`;
@@ -953,10 +953,10 @@ function renderEvent(eventName, british, english) {
     html += `<tr class="${cls}"><td>${s.rank}</td><td>${name}</td><td>${s.club}</td><td>${s.time}</td><td><span class="level-indicator ${dot}"></span>${lbl}</td></tr>`;
 
     if (s.rank === britCutoff && britCutoff < combined.length) {
-      html += `<tr class="cutoff-row cutoff-british"><td colspan="5"><span class="cutoff-label">â² British cutoff (Top ${britCutoff})</span></td></tr>`;
+      html += `<tr class="cutoff-row cutoff-british"><td colspan="5"><span class="cutoff-label">▲ British cutoff (Top ${britCutoff})</span></td></tr>`;
     }
     if (s.rank === engCutoff && engCutoff < combined.length) {
-      html += `<tr class="cutoff-row cutoff-english"><td colspan="5"><span class="cutoff-label">â² English cutoff (Top ${engCutoff})</span></td></tr>`;
+      html += `<tr class="cutoff-row cutoff-english"><td colspan="5"><span class="cutoff-label">▲ English cutoff (Top ${engCutoff})</span></td></tr>`;
     }
   });
 
@@ -980,7 +980,7 @@ function renderAll(data) {
   document.getElementById('content').innerHTML = html;
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ INIT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// âââ INIT âââ
 renderAll(SNAPSHOT);
 </script>
 
